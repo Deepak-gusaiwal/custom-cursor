@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Cursor</title>
+</head>
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        cursor: none;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+    
+    .cursor {
+        border: 2px solid black;
+        transform-origin: 100% 100%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        background-color: black;
+        position: absolute;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+    }
+    
+    .cursor::before {
+        content: '';
+        position: absolute;
+        border: 2px solid black;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        transition: 500ms all ease;
+        backdrop-filter: invert(60%);
+    }
+    
+    .dot {
+        position: absolute;
+        border: 1px solid rgb(255, 0, 0);
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        transition: 200ms all ease;
+        backdrop-filter: contrast(200%);
+        box-shadow: 0px 0px 23px 10px red;
+        transform: translate(222%, 123%);
+    }
+    
+    .btn {
+        font-size: 25px;
+        border: none;
+        padding: 2px 2px;
+        background-color: red;
+        color: white;
+        font-weight: 900;
+    }
+    
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+    }
+    
+    .size {
+        transform-origin: 100% 100%;
+        transform: translate(-50%, -50%);
+        background-color: red;
+        border: 2px solid black;
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        background-color: black;
+        position: absolute;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+    }
+    
+    .size::before {
+        content: '';
+        position: absolute;
+        border: 2px solid black;
+        border-radius: none;
+        height: 34px;
+        width: 89px;
+        transition: 500ms all ease;
+        backdrop-filter: invert(100%);
+    }
+</style>
+
+<body>
+    <div class="container">
+        <button class="btn active">
+        Button
+    </button>
+    </div>
+
+    <div class="cursor">
+
+    </div>
+    <div class="dot"></div>
+
+    <script>
+        let cursor = document.querySelector('.cursor')
+        let dot = document.querySelector('.dot')
+        window.addEventListener('mousemove', (e) => {
+            let x = e.pageX;
+            let y = e.pageY;
+            console.log('x=', x, 'and y=', y);
+
+            cursor.style.top = y + 'px'
+            cursor.style.left = x + 'px'
+            dot.style.top = y + 'px'
+            dot.style.left = x + 'px'
+        });
+
+        let active = document.querySelector('.active');
+        active.addEventListener('mousemove', () => {
+            let width = active.offsetWidth;
+            let height = active.offsetHeight;
+            // cursor.style.width = width + 'px'
+            // cursor.style.height = height + 'px'
+            // cursor.style.border = 'none';
+            cursor.classList.replace('cursor', 'size');
+            console.log('width of active butto is ', height)
+        });
+        active.addEventListener('mouseleave', () => {
+            let width = active.offsetWidth;
+            let height = active.offsetHeight;
+            cursor.classList.replace('size', 'cursor');
+        });
+
+        let btn = document.querySelector('.btn');
+        btn.addEventListener('click', () => {
+            console.log('you have clicked on the btn')
+        })
+    </script>
+</body>
+
+</html>
